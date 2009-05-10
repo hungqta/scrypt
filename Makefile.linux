@@ -1,13 +1,14 @@
 SRC=main.c sha256.c scrypt-nosse.c scryptenc.c crypto_aesctr.c
 LIBS=-lcrypto -lrt
+CONFIG=-DCONFIG_H_FILE=\"config_linux.h\"
 
 all: scrypt scrypt.so test
 
 scrypt: $(SRC)
-	gcc -o scrypt $(SRC) -DCONFIG_H_FILE=\"config_linux.h\" $(LIBS)
+	gcc -o scrypt $(SRC) $(CONFIG) $(LIBS)
 
-scrypt.so:
-	gcc -shared -fPIC -o libscrypt.so -DCONFIG_H_FILE=\"config_linux.h\" $(SRC) $(LIBS)
+scrypt.so: $(SRC)
+	gcc -shared -fPIC -o libscrypt.so $(CONFIG) $(SRC) $(LIBS)
 
 test: scrypt.so
 	gcc -o test test.c -I. -L. -lscrypt
