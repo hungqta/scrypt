@@ -1,1 +1,0 @@
-gcc -o scrypt main.c sha256.c scrypt-nosse.c scryptenc.c crypto_aesctr.c -DCONFIG_H_FILE=\"config_linux.h\" -lcrypto -lrt
